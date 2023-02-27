@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchPostAction } from "../redux/actions/postActions";
 import "./Form.css";
+
 const SearchPost = () => {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (search === "") {
+      return alert("Please provide a value");
+    }
+    dispatch(fetchPostAction(search));
   };
 
   return (
@@ -18,7 +26,7 @@ const SearchPost = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="Search for a post"
+          placeholder="Search for a post id"
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
